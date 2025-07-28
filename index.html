@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sai Varun Thiruvaipati - SAP Integration Developer</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for Inter and Dancing Script -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    <!-- React and ReactDOM CDNs -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- Babel for JSX transformation in browser -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            background-color: #1a202c; /* Consistent background */
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        .bg-dots {
+            background-image: radial-gradient(#4a5568 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        /* Basic animation for sections */
+        @keyframes fade-in-up {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .animate-fade-in-up {
+            animation: fade-in-up 1s ease-out;
+        }
+        .animate-fade-in {
+            animation: fade-in 1s ease-out;
+        }
+    </style>
+</head>
+<body class="font-inter bg-gray-900 text-gray-100 min-h-screen">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        // Extracted and structured data from the resume
+        const portfolioData = {
+            name: "Sai Varun Thiruvaipati",
+            title: "SAP Integration Developer",
+            taglines: [
+                "I'm a SAP Integration Developer.",
+                "A Problem Solver.",
+                "An Innovative thinker.",
+                "A.... cool guy?",
+                "OK..I'm running out of ideas...",
+                "Uhh... you can scroll down to learn more about me.",
+                "You're still here?",
+                "Ok, this has been fun now, I'm gonna restart the loop now...",
+                "See yaa :)"
+            ],
+            about: {
+                heading: "A Glimpse Into My Journey",
+                description: "I'm Sai Varun Thiruvaipati, an experienced SAP Integration Developer with over 6 years of expertise in SAP PI/PO, SAP Cloud Platform Integration (CPI), and SAP API Management (APIM). My work involves end-to-end interface development, migration, and production support, with a strong focus on interface design, mapping, and monitoring. I'm adept at integrating SAP and non-SAP systems across cloud and on-premises landscapes, including Google Cloud Platform (GCP) and SAP Cloud Connector. I leverage Groovy scripts, various adapters, and robust error handling to ensure seamless and secure data exchange. I'm passionate about building scalable, compliant, and efficient integration solutions.",
+                // IMPORTANT: Replace this with the direct public URL of your pp.jpg hosted online (e.g., GitHub, Imgur).
+                // Example: "https://raw.githubusercontent.com/your-username/your-repo/main/public/images/pp.jpg"
+                image: "https://placehold.co/400x400/3498db/FFFFFF?text=Your+Photo"
+            },
+            skills: {
+                "Development & Scripting": ["Groovy", "JavaScript", "XSLT", "Value Mapping", "Parameterized Mapping"],
+                "Integration & Middleware": ["SAP Cloud Platform Integration (CPI)", "SAP PI/PO", "SAP API Management", "Event Mesh", "Cloud Connector", "SAP Integration Suite"],
+                "SAP Ecosystem": ["SAP S/4HANA", "SAP SuccessFactors", "SAP UI5", "SAP BTP"],
+                "Protocols & Adapters": ["OData", "REST", "SOAP", "IDoc", "JDBC", "SFTP", "JMS", "AS2", "FTP"],
+                "Security & Compliance": ["OAuth 2.0", "JWT", "PGP Encryption", "Secure File Transfers", "Identity & Access Management"],
+                "CI/CD & DevOps": ["Jenkins", "GitHub Actions", "OpenShift", "Kubernetes"],
+                "Monitoring & Debuging": ["Message Processing Logs (MPL)", "API Performance Optimization", "Splunk", "Postman"],
+                "B2B & EDI Integration": ["EDI X12", "EDIFACT", "Trading Partner Management (TPM)", "Integration Advisor (IA)"],
+                "Project Management & Tools": ["Agile/Scrum", "Jira", "SIT & UAT Testing", "Documentation & Best Practices", "NetWeaver Developer Studio (NWDS)", "Kleopatra", "GPA tools", "AMS Support", "CTS+ transports", "SLD", "Integration Repository", "Integration Directory", "Runtime Workbench(RWB)"]
+            },
+            experience: [
+                {
+                    title: "SAP CPI Developer",
+                    company: "SIMPLPOS, Michigan",
+                    duration: "November 2024 - Present",
+                    description: [
+                        "Designed and implemented end-to-end SAP CPI integrations between POS systems, back-office platforms, and SAP backend (ECC/S4HANA).",
+                        "Developed iFlows with REST, OData, and SOAP adapters for seamless third-party integrations (e.g., Uber Eats, DoorDash, Grubhub).",
+                        "Enabled secure on-prem to cloud communication using SAP Cloud Connector with OAuth 2.0 authentication.",
+                        "Managed menu sync, order ingestion, and delivery updates via CPI for food delivery apps using real-time integration patterns.",
+                        "Maintained version control and automated CPI deployments using Jenkins, GitHub Actions, and OpenShift."
+                    ]
+                },
+                {
+                    title: "SAP CPI Developer",
+                    company: "USAA",
+                    duration: "August 2023 – Oct 2024",
+                    description: [
+                        "Designed and developed end-to-end integrations using SAP CPI to connect USAA’s SAP systems with third-party financial, banking, and claims platforms.",
+                        "Implemented and supported interfaces using SAP Process Integration/Process Orchestration (PI/PO) to enable secure and reliable message flows.",
+                        "Configured SAP API Management to expose, monitor, and secure APIs with policies such as rate-limiting and access control.",
+                        "Utilized SAP Cloud Connector to securely integrate on-premises USAA systems with cloud-based SAP services, ensuring compliance.",
+                        "Provided production support and resolved real-time integration issues during month-end, quarter-end, and year-end closing periods."
+                    ]
+                },
+                {
+                    title: "SAP CPI Integration Developer",
+                    company: "WIN Waste Innovations, NH",
+                    duration: "Dec 2021 - July 2023",
+                    description: [
+                        "Developed and maintained SAP CPI iFlows to integrate SAP S/4HANA with external systems for waste management operations, route planning, and customer billing.",
+                        "Designed API-based interfaces between SAP and third-party logistics platforms to synchronize service orders and dispatch updates.",
+                        "Implemented end-to-end CPI interfaces for vendor onboarding, including real-time tax validation and invoice posting.",
+                        "Enabled secure communication between SAP and third-party hauling partners using SOAP, IDoc, and PGP-encrypted files via SFTP adapters.",
+                        "Developed custom Groovy scripts within iFlows to enrich data and apply conditional logic for waste container movement and asset management."
+                    ]
+                },
+                {
+                    title: "SAP CPI Integration Developer",
+                    company: "Metsa, EU",
+                    duration: "June 2020 - November 2021",
+                    description: [
+                        "Designed and implemented SAP CPI integration flows (iFlows) for various business scenarios including SAP-to-SAP and SAP-to-non-SAP integrations.",
+                        "Developed complex mappings including Graphical Mapping, XSLT, and Java/Groovy scripting for transformation and routing logic.",
+                        "Designed and optimized API proxies in SAP API Management, applying policies for authentication, rate limiting, and security.",
+                        "Configured SAP Event Mesh for real-time event-driven messaging between cloud and on-premises systems.",
+                        "Automated CI/CD pipeline deployments for SAP CPI using Jenkins, GitHub Actions, and OpenShift."
+                    ]
+                }
+            ],
+            projects: [
+                {
+                    title: "POS System Integration for Retail (SIMPLPOS)",
+                    description: "Led the design and implementation of comprehensive SAP CPI integrations for POS systems, back-office platforms, and SAP backend (ECC/S4HANA). Enabled real-time third-party integrations (Uber Eats, DoorDash) and secure on-premise connectivity via SAP Cloud Connector and OAuth 2.0. Utilized Event Mesh for event-driven architecture.",
+                    technologies: ["SAP CPI", "REST", "OData", "SOAP", "Cloud Connector", "OAuth 2.0", "SAP API Management", "Event Mesh", "Jenkins", "GitHub Actions", "OpenShift"],
+                },
+                {
+                    title: "Financial Integration & API Management (USAA)",
+                    description: "Developed and managed end-to-end integrations using SAP CPI and PI/PO, connecting SAP systems with financial, banking, and claims platforms. Configured SAP API Management for secure API exposure and leveraged SAP Event Mesh for asynchronous, event-driven architectures to support critical insurance functions.",
+                    technologies: ["SAP CPI", "SAP PI/PO", "SAP API Management", "Event Mesh", "Cloud Connector", "OAuth 2.0", "JWT", "IDoc", "SFTP", "REST", "SOAP", "OData"],
+                },
+                {
+                    title: "Waste Management Operations Integration (WIN Waste Innovations)",
+                    description: "Integrated SAP S/4HANA with external systems for waste management, route planning, and customer billing using SAP CPI iFlows. Designed API-based interfaces for logistics platforms and implemented secure communication with hauling partners via PGP-encrypted SFTP. Developed custom Groovy scripts for data enrichment.",
+                    technologies: ["SAP CPI", "SAP S/4HANA", "REST", "OData", "SOAP", "IDoc", "SFTP", "PGP Encryption", "Groovy", "Cloud Connector"],
+                },
+                {
+                    title: "Cloud & Hybrid Integration Solutions (Metsa)",
+                    description: "Developed and implemented complex SAP CPI integration flows for SAP-to-SAP and SAP-to-non-SAP scenarios, including advanced mappings (XSLT, Groovy). Optimized API proxies in SAP API Management and integrated SAP Event Mesh for real-time messaging, alongside automating CI/CD pipelines.",
+                    technologies: ["SAP CPI", "SAP API Management", "Event Mesh", "REST", "SOAP", "IDoc", "JDBC", "OData", "Graphical Mapping", "XSLT", "Groovy", "Cloud Connector", "Jenkins", "GitHub Actions", "OpenShift"],
+                }
+            ],
+            contact: {
+                email: "thiruvaipatisaivarun@gmail.com",
+                github: "https://github.com/SaiVarunThiruvaipati",
+                linkedin: "https://www.linkedin.com/in/sai-varun-thiruvaipati/"
+            },
+            cvUrl: "Sai Varun Thiruvaipati Resume.pdf" // Direct reference for GitHub Pages deployment
+        };
+
+        // Simple typewriter effect for hero section
+        const Typewriter = ({ texts }) => {
+            const [currentTextIndex, setCurrentTextIndex] = useState(0);
+            const [currentText, setCurrentText] = useState('');
+            const [isDeleting, setIsDeleting] = useState(false);
+            const [typingSpeed, setTypingSpeed] = useState(150);
+
+            useEffect(() => {
+                const handleTyping = () => {
+                    const i = currentTextIndex % texts.length;
+                    const fullText = texts[i];
+
+                    if (isDeleting) {
+                        setCurrentText(fullText.substring(0, currentText.length - 1));
+                        setTypingSpeed(50);
+                    } else {
+                        setCurrentText(fullText.substring(0, currentText.length + 1));
+                        setTypingSpeed(150);
+                    }
+
+                    if (!isDeleting && currentText === fullText) {
+                        setTypingSpeed(2000); // Pause at end of typing
+                        setIsDeleting(true);
+                    } else if (isDeleting && currentText === '') {
+                        setIsDeleting(false);
+                        setCurrentTextIndex(currentTextIndex + 1);
+                        setTypingSpeed(200); // Pause before next word
+                    }
+                };
+
+                const timer = setTimeout(handleTyping, typingSpeed);
+                return () => clearTimeout(timer);
+            }, [currentText, isDeleting, typingSpeed, texts, currentTextIndex]);
+
+            return <span className="font-semibold text-xl md:text-3xl lg:text-4xl text-yellow-500">{currentText}</span>;
+        };
+
+        // Section component for consistent padding and styling
+        const Section = ({ id, title, children }) => (
+            <section id={id} className="min-h-screen py-16 px-4 md:px-8 lg:px-16 flex flex-col items-center justify-center bg-gray-900 text-gray-100 scroll-mt-20">
+                <h2 className="text-4xl lg:text-5xl font-bold mb-12 text-center text-teal-400">
+                    {title}
+                </h2>
+                {children}
+            </section>
+        );
+
+        // Icon components (simplified inline SVGs for direct HTML)
+        const UserIcon = (props) => (
+            <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        );
+        const BriefcaseIcon = (props) => (
+            <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><path d="M12 12h.01"/></svg>
+        );
+        const FolderIcon = (props) => (
+            <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9L8.24 3.4c-.31-.5-.9-.8-1.5-.8H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2z"/></svg>
+        );
+        const MailIcon = (props) => (
+            <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        );
+        const LinkedinIcon = (props) => (
+            <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+        );
+        const GithubIcon = (props) => (
+            <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.2c3.5 0 4.1-2.3 4.1-4.9V8.5c0-1.4-.5-2.5-1.5-3.2A4.2 4.2 0 0 0 16 3.5v-.5a2.5 2.5 0 0 0-7 0v.5A4.2 4.2 0 0 0 5 5.3c-1 .7-1.5 1.8-1.5 3.2v2.4c0 2.6.6 4.9 4.1 4.9a4.8 4.8 0 0 0-1 3.2v4"/></svg>
+        );
+        const DownloadIcon = (props) => (
+            <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+        );
+        const CodeIcon = (props) => (
+            <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        );
+        const CloudIcon = (props) => (
+            <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.5 19H17a5 5 0 0 0-9.5 0H7A4.5 4.5 0 0 0 2 16.5c0-1.6 1-3 2.7-3.2A6 6 0 0 1 18 10a6 6 0 0 1 4 5.5c0 1.6-1 3-2.7 3.2Z"/></svg>
+        );
+        const ServerIcon = (props) => (
+            <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg>
+        );
+        const ShieldIcon = (props) => (
+            <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        );
+        const GitBranchIcon = (props) => (
+            <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="6" x2="6" y1="3" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+        );
+        const ListTodoIcon = (props) => (
+            <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="5" width="6" height="6" rx="1"/><path d="M7 19H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2.5L10 2h4l3.5 3H20a2 2 0 0 1 2 2v3"/><path d="M14 11h.01"/><path d="M17 11h.01"/><path d="M17 14h.01"/><path d="M14 14h.01"/><path d="M14 17h.01"/><path d="M17 17h.01"/><path d="M14 20h.01"/><path d="M17 20h.01"/></svg>
+        );
+        const LinkIcon = (props) => (
+            <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07L10 6.07"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07L14 17.93"/></svg>
+        );
+        const LightbulbIcon = (props) => (
+            <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 14c.2-.8.5-1.5.9-2.2A4 4 0 0 0 12 2v3a4 4 0 0 0 2.2 3.8c.7.4 1.5.7 2.2.9"/><path d="M16.1 19a2 2 0 0 1-1.4 1.4L12 22h0a2 2 0 0 1-1.4-1.4L8 19"/><path d="M8 14c-.2-.8-.5-1.5-.9-2.2A4 4 0 0 1 12 2v3a4 4 0 0 1-2.2 3.8c-.7.4-1.5.7-2.2.9"/><path d="M19 14h.01"/><path d="M5 14h.01"/><path d="M12 6V5"/><path d="M12 18v1"/></svg>
+        );
+        const XIcon = (props) => (
+            <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        );
+        const ExternalLinkIcon = (props) => ( // Added ExternalLinkIcon definition
+            <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+        );
+
+
+        const App = () => {
+            const [activeSection, setActiveSection] = useState('home');
+            const sectionRefs = useRef({});
+
+            const [showSkillExplanationModal, setShowSkillExplanationModal] = useState(false);
+            const [selectedSkill, setSelectedSkill] = useState('');
+            const [skillExplanation, setSkillExplanation] = useState('');
+            const [isLoadingExplanation, setIsLoadingExplanation] = useState(false);
+            const [explanationError, setExplanationError] = useState('');
+
+            const [showProjectElaborationModal, setShowProjectElaborationModal] = useState(false);
+            const [selectedProjectTitle, setSelectedProjectTitle] = useState('');
+            const [projectElaboration, setProjectElaboration] = useState('');
+            const [isLoadingProjectElaboration, setIsLoadingProjectElaboration] = useState(false);
+            const [projectElaborationError, setProjectElaborationError] = useState('');
+
+            // Map for skill category icons
+            const skillCategoryIcons = {
+                "Development & Scripting": CodeIcon,
+                "Integration & Middleware": CloudIcon,
+                "SAP Ecosystem": ServerIcon,
+                "Protocols & Adapters": LinkIcon,
+                "Security & Compliance": ShieldIcon,
+                "CI/CD & DevOps": GitBranchIcon,
+                "Monitoring & Debuging": LightbulbIcon,
+                "B2B & EDI Integration": ExternalLinkIcon, // Used the newly defined ExternalLinkIcon
+                "Project Management & Tools": ListTodoIcon
+            };
+
+            // Function to fetch skill explanation using Gemini API
+            const getSkillExplanation = async (skill) => {
+                setIsLoadingExplanation(true);
+                setExplanationError('');
+                setSkillExplanation('');
+
+                let chatHistory = [];
+                const prompt = `Explain the skill '${skill}' in the context of SAP Integration and software development, in a concise paragraph suitable for a professional portfolio, highlighting its relevance or importance. Do not start with 'The skill ${skill} refers to...' or similar phrases.`;
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                const payload = { contents: chatHistory };
+                // IMPORTANT: For GitHub Pages deployment, you need to provide your actual API key here or
+                // set up a serverless function to proxy requests to Gemini API securely.
+                // Leaving it empty will only work in Canvas environment.
+                const apiKey = "";
+
+                let retries = 0;
+                const maxRetries = 5;
+                const baseDelay = 1000; // 1 second
+
+                while (retries < maxRetries) {
+                    try {
+                        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+                        const response = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+
+                        if (!response.ok) {
+                            if (response.status === 429) {
+                                const delay = Math.pow(2, retries) * baseDelay + Math.random() * 500;
+                                retries++;
+                                console.warn(`Rate limit hit. Retrying in ${delay / 1000}s... (Attempt ${retries}/${maxRetries})`);
+                                await new Promise(res => setTimeout(res, delay));
+                                continue;
+                            } else {
+                                const errorData = await response.json();
+                                throw new Error(`API error: ${response.status} ${response.statusText} - ${errorData.error?.message || 'Unknown error'}`);
+                            }
+                        }
+
+                        const result = await response.json();
+                        if (result.candidates && result.candidates.length > 0 &&
+                            result.candidates[0].content && result.candidates[0].content.parts &&
+                            result.candidates[0].content.parts.length > 0) {
+                            setSkillExplanation(result.candidates[0].content.parts[0].text);
+                        } else {
+                            setExplanationError('Could not get explanation. Invalid API response format.');
+                        }
+                        break;
+                    } catch (error) {
+                        console.error("Error fetching skill explanation:", error);
+                        setExplanationError(`Failed to get explanation: ${error.message}`);
+                        break;
+                    } finally {
+                        setIsLoadingExplanation(false);
+                    }
+                }
+
+                if (retries === maxRetries && isLoadingExplanation) {
+                    setExplanationError('Failed to get explanation after multiple retries. Please try again later.');
+                    setIsLoadingExplanation(false);
+                }
+            };
+
+            // Function to fetch project elaboration using Gemini API
+            const getProjectElaboration = async (projectTitle, projectDescription, projectTechnologies) => {
+                setIsLoadingProjectElaboration(true);
+                setProjectElaborationError('');
+                setProjectElaboration('');
+
+                let chatHistory = [];
+                const prompt = `Elaborate on the following project for a professional portfolio. Focus on the project's significance, challenges faced, or key outcomes. Project Title: "${projectTitle}". Project Description: "${projectDescription}". Technologies Used: ${projectTechnologies.join(', ')}. Keep it to a concise paragraph (around 4-5 sentences).`;
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                const payload = { contents: chatHistory };
+                // IMPORTANT: For GitHub Pages deployment, you need to provide your actual API key here or
+                // set up a serverless function to proxy requests to Gemini API securely.
+                // Leaving it empty will only work in Canvas environment.
+                const apiKey = "";
+
+                let retries = 0;
+                const maxRetries = 5;
+                const baseDelay = 1000; // 1 second
+
+                while (retries < maxRetries) {
+                    try {
+                        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+                        const response = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+
+                        if (!response.ok) {
+                            if (response.status === 429) {
+                                const delay = Math.pow(2, retries) * baseDelay + Math.random() * 500;
+                                retries++;
+                                console.warn(`Rate limit hit. Retrying in ${delay / 1000}s... (Attempt ${retries}/${maxRetries})`);
+                                await new Promise(res => setTimeout(res, delay));
+                                continue;
+                            } else {
+                                const errorData = await response.json();
+                                throw new Error(`API error: ${response.status} ${response.statusText} - ${errorData.error?.message || 'Unknown error'}`);
+                            }
+                        }
+
+                        const result = await response.json();
+                        if (result.candidates && result.candidates.length > 0 &&
+                            result.candidates[0].content && result.candidates[0].content.parts &&
+                            result.candidates[0].content.parts.length > 0) {
+                            setProjectElaboration(result.candidates[0].content.parts[0].text);
+                        } else {
+                            setProjectElaborationError('Could not get elaboration. Invalid API response format.');
+                        }
+                        break;
+                    } catch (error) {
+                        console.error("Error fetching project elaboration:", error);
+                        setProjectElaborationError(`Failed to get elaboration: ${error.message}`);
+                        break;
+                    } finally {
+                        setIsLoadingProjectElaboration(false);
+                    }
+                }
+
+                if (retries === maxRetries && isLoadingProjectElaboration) {
+                    setProjectElaborationError('Failed to get elaboration after multiple retries. Please try again later.');
+                    setIsLoadingProjectElaboration(false);
+                }
+            };
+
+
+            // Smooth scroll
+            const scrollToSection = (id) => {
+                document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+            };
+
+            // Observe sections for active navigation
+            useEffect(() => {
+                const observerOptions = {
+                    root: null,
+                    rootMargin: '-50% 0px -50% 0px', // When the middle of the section is in view
+                    threshold: 0
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            setActiveSection(entry.target.id);
+                        }
+                    });
+                }, observerOptions);
+
+                Object.values(sectionRefs.current).forEach(section => {
+                    if (section) observer.observe(section);
+                });
+
+                return () => {
+                    Object.values(sectionRefs.current).forEach(section => {
+                        if (section) observer.unobserve(section);
+                    });
+                };
+            }, []);
+
+            return (
+                <div className="font-inter bg-gray-900 text-gray-100 min-h-screen">
+                    {/* Navbar */}
+                    <nav className="fixed top-0 left-0 right-0 z-50 bg-gray-800 bg-opacity-95 shadow-lg backdrop-blur-sm p-4 rounded-b-xl">
+                        <div className="container mx-auto flex justify-between items-center flex-wrap">
+                            <a href="#home" className="text-teal-400 text-3xl font-bold rounded-lg px-3 py-1 hover:text-teal-300 transition-colors"
+                               style={{ fontFamily: "'Dancing Script', cursive" }}>
+                                {portfolioData.name}
+                            </a>
+                            <div className="flex items-center space-x-4 md:space-x-8">
+                                {[
+                                    { id: 'about', name: 'About Me', icon: UserIcon },
+                                    { id: 'experience', name: 'Experiences', icon: BriefcaseIcon },
+                                    { id: 'projects', name: 'Projects', icon: FolderIcon },
+                                    { id: 'contact', name: 'Contact', icon: MailIcon },
+                                ].map((item) => (
+                                    <button
+                                        key={item.id}
+                                        onClick={() => scrollToSection(item.id)}
+                                        className={`flex items-center space-x-1 px-3 py-2 rounded-lg transition-all duration-300 ease-in-out
+                                            ${activeSection === item.id
+                                                ? 'bg-teal-600 text-white shadow-md'
+                                                : 'text-gray-300 hover:text-teal-400 hover:bg-gray-700'
+                                            }
+                                            focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:ring-offset-gray-800
+                                        `}
+                                    >
+                                        <item.icon size={18} />
+                                        <span className="hidden md:inline-block text-lg">{item.name}</span>
+                                    </button>
+                                ))}
+                                {/* Social Media Icons */}
+                                <a
+                                    href={portfolioData.contact.linkedin}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-gray-300 hover:text-teal-400 transition-colors duration-200 text-xl"
+                                    title="LinkedIn Profile"
+                                >
+                                    <LinkedinIcon size={24} />
+                                </a>
+                                <a
+                                    href={portfolioData.contact.github}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-gray-300 hover:text-teal-400 transition-colors duration-200 text-xl"
+                                    title="GitHub Profile"
+                                >
+                                    <GithubIcon size={24} />
+                                </a>
+                            </div>
+                        </div>
+                    </nav>
+
+                    {/* Hero Section */}
+                    <section
+                        id="home"
+                        ref={(el) => (sectionRefs.current.home = el)}
+                        className="min-h-screen flex flex-col items-center justify-center text-center p-4 bg-gradient-to-br from-gray-950 to-gray-800 text-gray-100 relative overflow-hidden"
+                    >
+                        <div className="absolute inset-0 bg-dots opacity-10"></div>
+                        <div className="relative z-10 p-6 bg-gray-800 bg-opacity-70 rounded-3xl shadow-2xl border border-gray-700 max-w-4xl w-full mx-auto animate-fade-in-up">
+                            <p className="text-3xl md:text-5xl lg:text-6xl font-extrabold mb-4 text-white drop-shadow-lg">
+                                Hi, I'm <span className="text-teal-400">{portfolioData.name}.</span>
+                            </p>
+                            <h1 className="text-xl md:text-3xl lg:text-4xl text-gray-300 mb-8">
+                                <Typewriter texts={portfolioData.taglines} />
+                            </h1>
+                            <a
+                                href={portfolioData.cvUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center justify-center px-8 py-4 bg-teal-600 text-white text-lg font-semibold rounded-full shadow-lg hover:bg-teal-700 transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-teal-500 focus:ring-opacity-75"
+                            >
+                                <DownloadIcon className="mr-3" size={24} /> Download CV
+                            </a>
+                        </div>
+                    </section>
+
+                    {/* About Section */}
+                    <Section id="about" title="About Me">
+                        <div
+                            ref={(el) => (sectionRefs.current.about = el)}
+                            className="flex flex-col md:flex-row items-center gap-12 max-w-5xl mx-auto p-6 bg-gray-800 rounded-3xl shadow-xl border border-gray-700 animate-fade-in"
+                        >
+                            <div className="md:w-1/3 flex-shrink-0">
+                                <img
+                                    src={portfolioData.about.image}
+                                    alt="Your Photo"
+                                    className="w-full h-auto object-cover rounded-full border-4 border-teal-500 shadow-lg transform transition-transform duration-300 hover:scale-105"
+                                    onError={(e) => {
+                                        e.target.onerror = null; // Prevent infinite loop if fallback also fails
+                                        e.target.src = "https://placehold.co/400x400/FF0000/FFFFFF?text=Image+Load+Error"; // Fallback placeholder image
+                                        console.error("Failed to load image from URL:", portfolioData.about.image, "This might be a temporary issue or an incorrect path.");
+                                    }}
+                                />
+                            </div>
+                            <div className="md:w-2/3 text-lg leading-relaxed text-gray-300">
+                                <h3 className="text-2xl font-semibold mb-4 text-teal-400">{portfolioData.about.heading}</h3>
+                                <p>{portfolioData.about.description}</p>
+                            </div>
+                        </div>
+                    </Section>
+
+                    {/* Skills Section */}
+                    <Section id="skills" title="Skills">
+                        <div
+                            ref={(el) => (sectionRefs.current.skills = el)}
+                            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl w-full mx-auto p-6 bg-gray-800 rounded-3xl shadow-xl border border-gray-700 animate-fade-in"
+                        >
+                            {Object.entries(portfolioData.skills).map(([category, skillsList]) => (
+                                <div key={category} className="bg-gray-700 p-6 rounded-2xl shadow-inner border border-gray-600">
+                                    <h3 className="text-2xl font-bold mb-6 text-yellow-400 capitalize flex items-center">
+                                        {/* Dynamically render icon based on category */}
+                                        {React.createElement(skillCategoryIcons[category], { className: "mr-3" })}
+                                        {category}
+                                    </h3>
+                                    <div className="flex flex-wrap gap-3">
+                                        {skillsList.map((skill, index) => (
+                                            <span
+                                                key={index}
+                                                className="bg-teal-600 text-white px-5 py-2 rounded-full text-lg font-medium shadow-md
+                                                hover:bg-teal-700 transition-colors duration-200 transform hover:scale-105
+                                                flex items-center space-x-2 cursor-pointer"
+                                                onClick={() => {
+                                                    setSelectedSkill(skill);
+                                                    setShowSkillExplanationModal(true);
+                                                    getSkillExplanation(skill);
+                                                }}
+                                            >
+                                                <span>{skill}</span>
+                                                <span className="text-yellow-300">✨</span>
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </Section>
+
+                    {/* Experience Section */}
+                    <Section id="experience" title="Experience">
+                        <div
+                            ref={(el) => (sectionRefs.current.experience = el)}
+                            className="relative max-w-3xl w-full mx-auto p-8 bg-gray-800 rounded-3xl shadow-xl border border-gray-700 animate-fade-in"
+                        >
+                            {/* Vertical line for timeline */}
+                            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-teal-600 h-full rounded-full hidden md:block"></div>
+
+                            {portfolioData.experience.map((job, index) => (
+                                <div
+                                    key={index}
+                                    className={`mb-12 flex flex-col md:relative md:flex-row items-start ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}
+                                >
+                                    {/* Circle on timeline */}
+                                    <div className="hidden md:block absolute left-1/2 top-0 transform -translate-x-1/2 w-6 h-6 bg-yellow-500 rounded-full z-10 border-2 border-yellow-300 shadow-md"></div>
+
+                                    <div className="md:w-5/12 text-right md:pr-12">
+                                        <h3 className="text-2xl font-bold text-teal-400 mb-2">{job.title}</h3>
+                                        <p className="text-xl font-semibold text-gray-300">{job.company}</p>
+                                        <p className="text-lg text-gray-400 mb-4 md:mb-0">{job.duration}</p>
+                                    </div>
+                                    <div className="md:w-5/12 md:pl-12 bg-gray-700 p-6 rounded-2xl shadow-inner border border-gray-600">
+                                        <ul className="list-disc list-inside space-y-2 text-gray-300">
+                                            {job.description.map((point, i) => (
+                                                <li key={i} className="text-lg">{point}</li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </Section>
+
+                    {/* Projects Section */}
+                    <Section id="projects" title="My Projects">
+                        <div
+                            ref={(el) => (sectionRefs.current.projects = el)}
+                            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl w-full mx-auto p-6 bg-gray-800 rounded-3xl shadow-xl border border-gray-700 animate-fade-in"
+                        >
+                            {portfolioData.projects.map((project, index) => (
+                                <div
+                                    key={index}
+                                    className="bg-gray-700 p-6 rounded-2xl shadow-lg border border-gray-600 flex flex-col h-full transform transition-transform duration-300 hover:scale-105 hover:shadow-xl"
+                                >
+                                    <h3 className="text-2xl font-bold text-teal-400 mb-3">{project.title}</h3>
+                                    <p className="text-gray-300 mb-4 flex-grow text-lg">{project.description}</p>
+                                    <div className="flex flex-wrap gap-2 mb-4">
+                                        {project.technologies.map((tech, i) => (
+                                            <span key={i} className="bg-gray-600 text-gray-200 px-4 py-1 rounded-full text-sm font-medium">
+                                                {tech}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </Section>
+
+                    {/* Contact Section */}
+                    <Section id="contact" title="Get In Touch">
+                        <div
+                            ref={(el) => (sectionRefs.current.contact = el)}
+                            className="max-w-xl w-full mx-auto p-8 bg-gray-800 rounded-3xl shadow-xl border border-gray-700 animate-fade-in text-center"
+                        >
+                            <p className="text-2xl font-semibold text-gray-200 mb-4">Michigan, USA</p>
+                            <p className="text-2xl font-semibold text-gray-200 mb-4">+1 (313) 528-9067</p>
+                            <p className="text-2xl font-semibold text-gray-200">thiruvaipatisaivarun@gmail.com</p>
+                        </div>
+                    </Section>
+
+                    {/* Footer */}
+                    <footer className="bg-gray-900 text-gray-400 text-center py-8 px-4 border-t border-gray-700 rounded-t-xl">
+                        <p className="text-lg">&copy; {new Date().getFullYear()} {portfolioData.name}. All rights reserved.</p>
+                        <p className="text-sm mt-2">Built with React & Tailwind CSS</p>
+                    </footer>
+
+                    {/* Skill Explanation Modal */}
+                    {showSkillExplanationModal && (
+                        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4">
+                            <div className="bg-gray-800 rounded-lg p-8 max-w-lg w-full shadow-2xl border border-gray-700 relative">
+                                <h3 className="text-2xl font-bold text-teal-400 mb-4">{selectedSkill} Explanation</h3>
+                                {isLoadingExplanation ? (
+                                    <div className="flex items-center justify-center h-24">
+                                        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-teal-400"></div>
+                                        <p className="ml-4 text-gray-300">Generating explanation...</p>
+                                    </div>
+                                ) : explanationError ? (
+                                    <p className="text-red-400">{explanationError}</p>
+                                ) : (
+                                    <p className="text-gray-200 leading-relaxed">{skillExplanation}</p>
+                                )}
+                                <button
+                                    onClick={() => setShowSkillExplanationModal(false)}
+                                    className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors duration-200"
+                                >
+                                    <XIcon size={24}/>
+                                </button>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Project Elaboration Modal */}
+                    {showProjectElaborationModal && (
+                        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4">
+                            <div className="bg-gray-800 rounded-lg p-8 max-w-lg w-full shadow-2xl border border-gray-700 relative">
+                                <h3 className="text-2xl font-bold text-teal-400 mb-4">{selectedProjectTitle} Elaboration</h3>
+                                {isLoadingProjectElaboration ? (
+                                    <div className="flex items-center justify-center h-24">
+                                        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-purple-400"></div>
+                                        <p className="ml-4 text-gray-300">Generating project details...</p>
+                                    </div>
+                                ) : projectElaborationError ? (
+                                    <p className="text-red-400">{projectElaborationError}</p>
+                                ) : (
+                                    <p className="text-gray-200 leading-relaxed">{projectElaboration}</p>
+                                )}
+                                <button
+                                    onClick={() => setShowProjectElaborationModal(false)}
+                                    className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors duration-200"
+                                >
+                                    <XIcon size={24}/>
+                                </button>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    </script>
+</body>
+</html>
